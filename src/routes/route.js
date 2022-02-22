@@ -2,14 +2,16 @@ const express = require('express');
 const router = express.Router()
 
 router.get('/movies', function(req,res){
-    let movies = ['p.k','3-Idiots','Zero','Dhoom','Rustom','Antim']
-    res.send(movies)
+    res.send("['p.k','3-Idiots','Zero','Dhoom','Rustom','Antim']")
 })
 
-router.get('/movies/indexNumber', function(req,res){
+router.get('/movies/:indexNumber', function(req,res){
     let movies = ['p.k','3-Idiots','Zero','Dhoom','Rustom','Antim']
-    for(let i of movies){
-        res.send(i);
+    let values = req.params.indexNumber;
+    if(values>movies.length-1){
+        res.send("Doesn't Exist")
+    }else{
+        res.send(movies[values])
     }
 
 })
