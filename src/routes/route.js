@@ -16,4 +16,21 @@ router.get('/movies/:indexNumber', function(req,res){
 
 })
 
+router.get('/films', function(req,res){
+    res.send( [ {
+ id: 1,
+ name: "The Shining"
+}, {
+ id: 2,
+ name: "Incendies"
+}, {
+ id: 3,
+ name: "Rang de Basanti"
+}, {
+ id: 4,
+ name: "Finding Demo"
+}])
+
+})
+
 module.exports = router;
