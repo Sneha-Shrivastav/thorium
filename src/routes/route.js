@@ -8,7 +8,7 @@ router.get('/movies', function(req,res){
 
 router.get('/movies/:indexNumber', function(req,res){
     let movies = ['p.k','3-Idiots','Zero','Dhoom','Rustom','Antim']
-        for(i of movies){
+        for(let i in movies){
             console.log(movies[i]);
         }
 
