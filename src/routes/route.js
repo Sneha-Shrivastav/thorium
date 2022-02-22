@@ -1,4 +1,4 @@
-let obj = require('.\logger\logger.js')
+let obj = require('./logger/logger.js')
 const express = require('express');
 const router = express.Router();
 
