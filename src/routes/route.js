@@ -9,8 +9,8 @@ router.get('/hi', function(req,res){
     }
     let val = arr.pop()
     let val1 = val * (val+1)/2
-    let res = val1 - sum
+    let result = val1 - sum
 
-    res.send( {data: res});
+    res.send( {data: result});
 });
 module.exports = router;
