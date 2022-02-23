@@ -4,10 +4,13 @@ const router = express.Router();
 router.get('/hi', function(req,res){
     let arr = [1,2,3,5,6,7]
     let sum =0
-    for(let i=0; i<arr.length; i++){
-        sum +=i
+    for(let i in arr){
+        sum +=arr[i]
     }
-    val = sum
-    res.send(val)
-})
+    let val = arr.pop()
+    let val1 = val * (val+1)/2
+    let res = val1 - sum
+
+    res.send( {data: res});
+});
 module.exports = router;
