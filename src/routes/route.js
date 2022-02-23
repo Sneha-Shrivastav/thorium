@@ -85,7 +85,7 @@ let arr = [ {
   
    "bookedOn": '31/08/2001',
   
-   "bookedFor": 01/09/2001
+   "bookedFor": "01/09/2001"
   
   },
   
@@ -152,7 +152,11 @@ let arr = [ {
   router.post('/players', function(req,res){
     let ele = req.body.element
     arr.push(ele)
-    res.send(arr)
+    if(arr[arr.name === "ele"]){
+      res.send("player already exist")
+    }else{
+    res.send( arr )
+  }
   })
 
 
