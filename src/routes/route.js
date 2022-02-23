@@ -13,4 +13,19 @@ router.get('/hi', function(req,res){
 
     res.send( {data: result});
 });
+
+router.get('/hello', function(req,res){
+    let arr = [33,34,35,37,38]
+    let len = arr.length
+    let sum = 0
+    for(let i in arr){
+        sum += a[i]
+    }
+    let firstElement = arr[0]
+    let val = arr.pop()
+    let val2 = (len + 1) * (firstElement+val)/2
+    let result = val2 - sum
+
+    res.send({data: result});
+})
 module.exports = router;
