@@ -33,7 +33,7 @@ const router = express.Router();
 // let myArr = [23, 45, 67, 281394, 32424, 423, 24, 42323, 4, 234, 12, 34]
 // //filter out all the numbers that are greater than input( input is received from query params)
 // router.post("/post-query-2", function (req, res) {
-//     //CODE HERE
+// //     //CODE HERE
 //     let input= req.query.input
 //     let finalArr= myArr.filter( ele => ele > input)
 //     // let finalArr=[]
@@ -108,9 +108,15 @@ let persons= [
 
 
 router.post('/post-query', function(req,res){
+  let eligibleVoters = []
   let input = req.query.input
-  let eligibleVoters = persons.filter(voter => persons.age>18)
-  res.send({ result: eligibleVoters , status: true })
+  for(i=0; i<persons.length; i++){
+    if(persons[i].age>input){
+      persons[i].votingStatus = true
+       eligibleVoters.push(persons[i].age)
+    }
+  }
+  res.send({ result: eligibleVoters, status: true})
 })
 
 
