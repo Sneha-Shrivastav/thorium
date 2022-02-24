@@ -37,7 +37,7 @@ let players = []
     let player = req.body
     let playerName = player.name
     for(let i=0; i<players.length; i++){
-      if(players[i].name == player){
+      if(players[i].name == playerName){
         res.send("player already exist")
     }
 }
@@ -47,27 +47,26 @@ res.send(players)
 
   router.post('/players/:playerName/bookings/:bookingId', function(req,res){
     let name = req.params.playerName
-    let isPlayerPresent = false
+    let isPlayerAbsent = true
 
     for(let i=0; i<players.length; i++){
       if(players[i].name == name){
-        isPlayerPresent = true
+        isPlayerAbsent = false
       }
     }
-    if(!isPlayerPresent){
-      return res.send("Player not present")
+    if(isPlayerAbsent){
+      return res.send('Player not present')
     }
     let booking = req.body
     let bookingId = req.params.bookingId
-    for(let i=0; i<isPlayerPresent.length; i++){
+    for(let i=0; i<players.length; i++){
       if(players[i].name == name){
-        let isBookingPresent = false
-        for(let j=0; j<player[i].bookings.length; j++){
+        for(let j=0; j<players[i].bookings.length; j++){
           if(players[i].booking[j].bookingNumber == bookingId){
             return res.send('Booking with this id is already present for the player')
           }
         }
-        players[i].bookingId.push(booking)
+        players[i].bookings.push(booking)
       }
     }
     res.send(players)
