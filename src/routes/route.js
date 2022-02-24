@@ -31,132 +31,46 @@ const router = express.Router();
 // });
 
 
-let arr = [ {
-
-    "name": "manish",
-  
-    "dob": "1/1/1995",
-  
-    "gender": "male",
-  
-    "city": "jalandhar",
-  
-    "sports": [
-  
-      "swimming"
-  
-    ],
-  
-    "bookings": [
-  
-      
-  
-  {
-  
-   "bookingNumber": 1,
-  
-    "sportId": "",
-  
-    "centerId": "",
-  
-   "type": "private",
-  
-   "slot": '16286598000000',
-  
-   "bookedOn": '31/08/2021',
-  
-   "bookedFor": '01/09/2021'
-  
-  },
-  
-   
-  
-  {
-  
-   "bookingNumber": 2,
-  
-    "sportId": " ",
-  
-    "centerId": " ",
-  
-   "type": "private",
-  
-   "slot": '16286518000000',
-  
-   "bookedOn": '31/08/2001',
-  
-   "bookedFor": "01/09/2001"
-  
-  },
-  
-  
-  
-  
-    ]
-  
-  },
-  
-  
-  {
-  
-    "name": "gopal",
-  
-    "dob": "1/09/1995",
-  
-    "gender": "male",
-  
-    "city": "delhi",
-  
-    "sports": [
-  
-      "soccer"
-  
-    ],
-  
-    "bookings": [
-  
-      
-  
-    ]
-  
-  },
-  
-  {
-  
-    "name": "lokesh",
-  
-    "dob": "1/1/1990",
-  
-    "gender": "male",
-  
-    "city": "mumbai",
-  
-    "sports": [
-  
-      "soccer"
-  
-    ],
-  
-    "bookings": [
-  
-      
-  
-    ]
-  
-  },
-  
-  
-  
-  ]
+let players = []
 
   router.post('/players', function(req,res){
-    let ele = req.body.element
-    arr.push(ele)
-    if(arr[arr.name === "ele"]){
-      res.send("player already exist")
-    }else{
-    res.send( arr )
-  }
+    let player = req.body
+    let playerName = player.name
+    for(let i=0; i<players.length; i++){
+      if(players[i].name == player){
+        res.send("player already exist")
+    }
+}
+players.push(player);
+res.send(players)
+});
+
+  router.post('/players/:playerName/bookings/:bookingId', function(req,res){
+    let name = req.params.playerName
+    let isPlayerPresent = false
+
+    for(let i=0; i<players.length; i++){
+      if(players[i].name == name){
+        isPlayerPresent = true
+      }
+    }
+    if(!isPlayerPresent){
+      return res.send("Player not present")
+    }
+    let booking = req.body
+    let bookingId = req.params.bookingId
+    for(let i=0; i<isPlayerPresent.length; i++){
+      if(players[i].name == name){
+        let isBookingPresent = false
+        for(let j=0; j<player[i].bookings.length; j++){
+          if(players[i].booking[j].bookingNumber == bookingId){
+            return res.send('Booking with this id is already present for the player')
+          }
+        }
+        players[i].bookingId.push(booking)
+      }
+    }
+    res.send(players)
   })
 
 
