@@ -111,7 +111,7 @@ router.post('/post-query', function(req,res){
   let eligibleVoters = []
   let input = req.query.input
   for(i=0; i<persons.length; i++){
-    if(persons[i].age>20){
+    if(persons[i].age>input){
       persons[i].votingStatus = true
        eligibleVoters.push(persons[i])
     }
