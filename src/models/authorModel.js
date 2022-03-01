@@ -3,12 +3,9 @@ const mongoose = require('mongoose');
 const authorSchema = new mongoose.Schema({
     authorId:{
         type:Number,
-        required:true
-    },
-    authorName: {
-        type: String,
         required: true
     },
+    authorName: String,
     age: Number,
     address: String
 })
