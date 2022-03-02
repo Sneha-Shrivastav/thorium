@@ -97,12 +97,10 @@ const getBooksInYear = async function(req,res){
     res.send({msg: allBooks})
 }
 const getParticularBooks = async function(req,res){
-    let year = req.query.year
-    let name = req.query.name
-    let authorname = req.query.authorname
-    let page = req.query.page
+    let data = req.body
     
-    let allBooks = await BookModel.find({$or:[{bookName:{$eq:name}},{authorName:{$eq:authorname}},{year:{$eq:year}},{totalPages:{$eq:page}}]}).select()
+    let allBooks = await BookModel.find(data)
+    res.send({msg: data})
 }
 
 const getXINRBooks = async function(req,res){
