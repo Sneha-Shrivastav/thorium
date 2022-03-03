@@ -4,17 +4,23 @@ const ObjectId = mongoose.Schema.Types.ObjectId
 
 const newbookSchema = new mongoose.Schema({
     name: String,
+    authorName: String,
     author:{
         type: ObjectId,
         ref: 'newauthor',
         required: true
     },
-    price: String,
+    price: Number,
     rating: Number,
+    publisherName: String,
     publisher: {
         type: ObjectId,
         ref: 'newpublisher',
         required: true
+    },
+    isHardCover:{
+        type:Boolean,
+        default:false
     }
 }, { timestamps: true });
 

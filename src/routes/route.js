@@ -31,5 +31,9 @@ router.post('/createBook', newbookController.createBook)
 
 router.get('/getBooks', newbookController.getBooks)
 
+router.put('/books', newbookController.books)
+
+router.put('/priceUpdate'/newbookController.priceUpdate)
+
 
 module.exports = router;
