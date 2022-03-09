@@ -84,6 +84,20 @@ const updateUser = async function (req, res) {
   res.send({ status: updatedUser, data: updatedUser });
 };
 
+const deleteUser = async function(req,res){
+  let userId = req.params.userId;
+  let user = await userModel.findById(userId).select({isDeleted:1}).updateOne({isDeleted:true});
+  if (!user) {
+    
+    return res.send("No such user exists");
+  }
+  // let token = req.headers["Auth-token"];
+  // if (!token) token = req.headers["auth-token"];
+
+  // if (!token) return res.send({ status: false, msg: "token must be present" });
+
+}
+
 const postMessage = async function (req, res) {
     let message = req.body.message
     // Check if the token is present
@@ -119,4 +133,5 @@ module.exports.createUser = createUser;
 module.exports.getUserData = getUserData;
 module.exports.updateUser = updateUser;
 module.exports.loginUser = loginUser;
+module.exports.deleteUser = deleteUser;
 module.exports.postMessage = postMessage
