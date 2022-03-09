@@ -36,13 +36,13 @@ const loginUser = async function (req, res) {
     },
     "functionup-thorium"
   );
-  res.setHeader("x-auth-token", token);
+  res.setHeader("auth-token", token);
   res.send({ status: true, data: token });
 };
 
 const getUserData = async function (req, res) {
-  let token = req.headers["x-Auth-token"];
-  if (!token) token = req.headers["x-auth-token"];
+  let token = req.headers["Auth-token"];
+  if (!token) token = req.headers["auth-token"];
 
   //If no token is present in the request header return error
   if (!token) return res.send({ status: false, msg: "token must be present" });
@@ -90,6 +90,8 @@ const deleteUser = async function(req,res){
   if (!user) {
     
     return res.send("No such user exists");
+  }else{
+    return res.send({status:true, data:user})
   }
   // let token = req.headers["Auth-token"];
   // if (!token) token = req.headers["auth-token"];
@@ -103,19 +105,19 @@ const postMessage = async function (req, res) {
     // Check if the token is present
     // Check if the token present is a valid token
     // Return a different error message in both these cases
-    let token = req.headers["x-auth-token"]
-    if(!token) return res.send({status: false, msg: "token must be present in the request header"})
-    let decodedToken = jwt.verify(token, 'functionup-thorium')
+    // let token = req.headers["auth-token"]
+    // if(!token) return res.send({status: false, msg: "token must be present in the request header"})
+    // let decodedToken = jwt.verify(token, 'functionup-thorium')
 
-    if(!decodedToken) return res.send({status: false, msg:"token is not valid"})
+    // if(!decodedToken) return res.send({status: false, msg:"token is not valid"})
     
-    //userId for which the request is made. In this case message to be posted.
-    let userToBeModified = req.params.userId
-    //userId for the logged-in user
-    let userLoggedIn = decodedToken.userId
+    // //userId for which the request is made. In this case message to be posted.
+    // let userToBeModified = req.params.userId
+    // //userId for the logged-in user
+    // let userLoggedIn = decodedToken.userId
 
-    //userId comparision to check if the logged-in user is requesting for their own data
-    if(userToBeModified != userLoggedIn) return res.send({status: false, msg: 'User logged is not allowed to modify the requested users data'})
+    // //userId comparision to check if the logged-in user is requesting for their own data
+    // if(userToBeModified != userLoggedIn) return res.send({status: false, msg: 'User logged is not allowed to modify the requested users data'})
 
     let user = await userModel.findById(req.params.userId)
     if(!user) return res.send({status: false, msg: 'No such user exists'})
