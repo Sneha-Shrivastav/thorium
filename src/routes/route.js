@@ -1,29 +1,32 @@
 const express = require('express');
 const router = express.Router();
-const CowinController= require("../controllers/cowinController")
-
-
+const authorController = require("../controllers/authorController")
+const blogController = require("../controllers/blogController")
+const Middleware = require("../middlewares/middleware")
 
 router.get("/test-me", function (req, res) {
-    res.send("My first ever api!")
+    res.send("welcome in our first project...............!")
 })
 
 
-router.get("/cowin/states", CowinController.getStates)
-router.get("/cowin/districtsInState/:stateId", CowinController.getDistricts)
-router.get("/cowin/getByPin", CowinController.getByPin)
-
-router.post("/cowin/getOtp", CowinController.getOtp)
-
-// WRITE A GET API TO GET THE LIST OF ALL THE "vaccination sessions by district id" for any given district id and for any given date
-
-router.get("/cowin/getByDistrictId", CowinController.getByDistrictId)
-
-router.get("/temperature", CowinController.temperature)
+router.post("/create", authorController.createAuthor)
 
 
-router.get("/citiesTemperature", CowinController.citiesTemperature)
+router.post("/createBlog",Middleware.authentication,Middleware.authorise, blogController.create)
 
-router.post("/memeCreation", CowinController.memeCreation)
+
+router.put("/update/:blogId" ,Middleware.authentication,Middleware.authorise, blogController.updateBlog)
+
+
+router.delete("/deleteByQuery",Middleware.authentication,Middleware.authorise, blogController.deleteByQuery)
+
+
+router.delete("/blog/:blogId",Middleware.authentication,Middleware.authorise, blogController.deleteBlog)
+
+
+router.get("/getBlogs" ,Middleware.authentication,Middleware.authorise, blogController.getBlogs)
+
+router.post("/authorLogin",authorController.authorLogin)
+
 
 module.exports = router;
