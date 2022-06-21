@@ -1,0 +1,14 @@
+{
+  "dependencies": {
+    "aws-sdk": "^2.1111.0",
+    "bcrypt": "^5.0.1",
+    "currency-symbol": "^1.0.6",
+    "currency-symbol-map": "^5.0.1",
+    "express": "^4.18.1",
+    "it": "^1.1.1",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^6.2.10",
+    "multer": "^1.4.4",
+    "nodemon": "^2.0.15"
+  }
+}
