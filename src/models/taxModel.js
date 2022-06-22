@@ -1,17 +1,18 @@
 const mongoose = require('mongoose');
-const { isObjectId } = require('../validator/validator');
+
+const ObjectId = mongoose.Schema.Types.ObjectId;
 
 const taxSchema = new mongoose.Schema({
 
 
     userId:{
-        type:Object,
+        type: ObjectId,
         required:true,
         ref:'User'
 
 
     },
-
+    // considering only salesTax
     totalSales:{
         type:Number,
         required:true,
@@ -42,12 +43,13 @@ const taxSchema = new mongoose.Schema({
 
     taxSlab :{
         type:Number,
-        enum:['5','12','18','28']
+        enum:[5,12,18,28]
 
     },
     taxStatus :{
         type:String,
-        enum:['New','Paid','Delayed',]
+        enum:['New','Paid','Delayed','inProcess'],
+        default: 'inProcess'
 
     },
     // only to be done by taxAccountant
@@ -55,6 +57,11 @@ const taxSchema = new mongoose.Schema({
         type:String,
         // can be done only by taxAccountant 
         enum:["delayed","new"],
+
+    isDeleted:{
+        type:Boolean,
+        default:false
+    }
         
 
     },
@@ -71,10 +78,10 @@ const taxSchema = new mongoose.Schema({
 
 
 
-})
+},{timestamps:true})
 
 
 
 
 
-module.exports = new mongoose.model('taxModel',taxSchema)
+module.exports = new mongoose.model('tax',taxSchema)

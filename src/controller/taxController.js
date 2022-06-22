@@ -2,6 +2,7 @@
 
 
 const taxModel =  require('../models/taxModel')
+const { findOneAndUpdate } = require('../models/userModel')
 const userModel = require('../models/userModel')
 const validator = require('../validator/validator')
 
@@ -12,6 +13,7 @@ const userTaxCreation = async function(req,res){
         
         
     const userData = req.body
+    console.log(userData)
 
     // if(validator.isValidRequestBody(userData)){
 
@@ -19,17 +21,17 @@ const userTaxCreation = async function(req,res){
     // }
 
 
-    let{ userId,totalSales,city,date,SGST,CGST,taxSlab} = userData
+    let{ userId,totalSales,city,date,SGST,CGST,taxSlab,taxStatus} = userData
 
-    if(validator.isValidObjectId(userId)){
-        return res.status(400).send({status:false,msg:"please provide valid userId"})
-    }
+    // if(validator.isValidObjectId(userId)){
+    //     return res.status(400).send({status:false,msg:"please provide valid userId"})
+    // }
 
     // more validations can be done easily like that 
-    if(validator.isValid(city)){
-        return res.status(400).send({status:false,msg: " please provide valid city "})
+    // if(validator.isValid(city)){
+    //     return res.status(400).send({status:false,msg: " please provide valid city "})
 
-    }
+    // }
 
     //checking user exist or not 
     // as well it is a taxPayer as well only 
@@ -37,29 +39,32 @@ const userTaxCreation = async function(req,res){
     const userCheck = await userModel.findById(userId)
     // user validation 
 
+
+   console.log(userCheck.role)
+   
     if(!userCheck){
 
         return res.status(404).send({status:false,msg:"no such user found please check userid "})
     }
 
     else{
-        if(userCheck[role]=='admin'||userCheck[role]=='taxAccountant'){
+        if(userCheck.role=='admin'||userCheck.role=='taxAccountant'){
 
             return res.status(404).send({status:false,msg:"you are not a taxpayer  "})
         }
     }
 
-    if(validator.isValid(totalSales)){
-        return res.status(400).send({status:false,msg:"please provide valid totalSales "})
+    // if(validator.isValid(totalSales)){
+    //     return res.status(400).send({status:false,msg:"please provide valid totalSales "})
 
-    }
+    // }
 
     let UT =["Andaman and Nicobar","Chandigarh","Daman and Diu","Dadar and Nagar Haveli","Delhi","Jammu and Kashmir","Ladakh","Lakshadweep"]
     
     CGST = (totalSales*taxSlab)/100
     SGST = CGST
 
-    // that means city is in UT
+    // that means city is in UT there SGST will be  0 
     // it will return true if yes  
      if(UT.indexOf(city)!== -1 ){
 
@@ -82,6 +87,7 @@ const userTaxCreation = async function(req,res){
         "SGST":SGST,
         "CGST":CGST,
         "taxSlab" : taxSlab,
+        "taxStatus" : taxStatus,  // here we can change the taxStatus that can be done only bu taxPayer 
         "totalTax":totalTax
 
 
@@ -130,10 +136,13 @@ const editTaxPayer = async function (req,res){
 
 
 
-const getTaxDetailsById = async function (req,res){
+const getTaxDetailsByUserId = async function (req,res){
 
- // thorugh query param
-    let userId = req.query.userId
+
+    // authentication and authorization already done  in middleware 
+
+ // thorugh  params 
+    let userId = req.params.userId
 
     // checking user id exist or not 
 
@@ -142,6 +151,12 @@ const getTaxDetailsById = async function (req,res){
     if(!userCheck){
         return 
     }
+
+    // list of all the taxes of that  user 
+    let userTaxes = await taxModel.find({userId})
+    console.log(userTaxes)
+
+    return res.send('thank you ')
 
 
     // an user can access its own details and 
@@ -187,21 +202,35 @@ const getTaxDetailsFiltres = async function(req,res){
 }
 
 
-
+// that means taxStatus will be change to paid .
 const markTaxPaid = async function(req,res){
 
     // only  can be done by tax payer 
 
+    let userId  = req.params.userId
+    let newStatus = req.query.status
+    let taxId  = req.query.taxId  
+
+
+
+    let userCheck = await userModel.findById(userId)
+    if(!userCheck ){
+        return res.send('no such user Found ')
+    }
+
+    let taxIdCheck = await taxModel.findById(taxId)
+    if(!taxIdCheck){
+        return res.send(' no tax record Found ')
+    }
+
+    let updated = await taxModel.findOneAndUpdate(taxId,{taxStatus:newStatus},{new:true})
+
+
+
     //authenticate  and authhorization will be done by middleware 
     
 
-    const newTaxStatus = req.query.taxStatus
-    
-
-    //findOneAndUpdate 
-
-    const updated = await taxModel.findOneAndUpdate(userId,{taxStatus:newTaxStatus},{new:true})
-
+   
     res.send(updated)
 
 
@@ -255,6 +284,6 @@ const createTaxDue = async function(req,res){
 
 
 module.exports={
-    userTaxCreation,getTaxDetailsById,getTaxDetailsFiltres, markTaxPaid ,createTaxDue,editTaxDue, editTaxPayer
+    userTaxCreation,getTaxDetailsByUserId,getTaxDetailsFiltres, markTaxPaid ,createTaxDue,editTaxDue, editTaxPayer
   }
 

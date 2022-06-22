@@ -35,5 +35,8 @@ router.put('/users/:userId/orders', orderController.updateOrder);
 // tax api 
 
 router.post('/users/taxCalculator',taxController.userTaxCreation)
+router.get('/users/:userId/getTaxDetails', taxController.getTaxDetailsByUserId)
+router.post('/users/:userId/markTaxPaid',taxController.markTaxPaid)
+
 
 module.exports = router;

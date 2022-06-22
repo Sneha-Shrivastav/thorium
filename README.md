@@ -17,6 +17,11 @@ taxPayer , taxAccountant  , admin
  in this project i have done this via Schema in mongoDB via mongoose  by an option of selecting role 
  user can select the role  ['taxPayer','taxAcc','admin ']
 
+
+
+ for the simplicity this project  it have scenario of only salesTax.
+ and have capability of intigration with incomeTax also 
+
  
 # details of apis
 
@@ -29,13 +34,25 @@ taxPayer , taxAccountant  , admin
 
 
 
-STAR 
+STAR (situation Task ACtion REsult )
 
 
 # apis are protected via authentication and authorization 
  json web token 
  why? 
  reduced the load of server for the authentication and authorization 
+
+
+ when users Login they will rewarded token [in header ] which sent back to their browser .
+
+ when users comes next time . they need  not to login, instead browser send the token to server in header .
+
+ server will decoded it and perform neccessary operations for authentiction and authorization .
+
+  most common one is checking the decoded token userId with userid of params or from request 
+
+
+  in this we can sent details of role of user in token also . 
  
 
 
@@ -48,4 +65,15 @@ validator
 controllers 
 middleware 
 models  seperately  for the efficiency 
+
+
+
+# how i undo changes 
+i followed soft delete methods i.e every schema is have a key of isDeleted  which has default boolean value false 
+
+when user wanna delete its account he/she just turn isDeletedkey to true .
+data wont be deleted but flagged and remain in database 
+admin can change the status again 
+
+
 
