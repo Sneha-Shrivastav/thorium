@@ -139,7 +139,9 @@ const editTaxPayer = async function (req,res){
 const getTaxDetailsByUserId = async function (req,res){
 
 
-    // authentication and authorization already done  in middleware 
+    // authentication and authorization already done  in middleware  relief for taxAccountant and admin
+
+    // in that way user can access it own tax as userId in param must matched with userId in toekn 
 
  // thorugh  params 
     let userId = req.params.userId
@@ -153,10 +155,10 @@ const getTaxDetailsByUserId = async function (req,res){
     }
 
     // list of all the taxes of that  user 
-    let userTaxes = await taxModel.find({userId})
+    let userTaxes = await taxModel.find({userId}) 
     console.log(userTaxes)
 
-    return res.send('thank you ')
+    return res.send(userTaxes)
 
 
     // an user can access its own details and 
@@ -238,35 +240,49 @@ const markTaxPaid = async function(req,res){
 
 }
 
-const createTaxDue = async function(req,res){
+const createAndEditTaxDue = async function(req,res){
     // can be only done by taxAccountant 
 
      // in all we first need to find that userExist or not 
      // as we have done in prevbious cases 
 
+     let userId =req.params.userId
+     let taxDueStatus = req.query.taxDueStatus
+     let taxId  = req.query.taxId 
 
-     const updater = req.query 
-    updater = {userID,taxStatus}
-
-    const userCheck = await userModel.findById(userId)
-    if(!userCheck){
-        return res.send(' no such user Exist ')
+     let userCheck = await userModel.findById(userId)
+    if(!userCheck ){
+        return res.send('no such user Found ')
     }
+
 
     
 
-    if(userCheck[role] !== 'taxAccountant'){
+    if(userCheck.role!== 'taxAccountant'){
 
         return res.send(' only tax accountant allowed ')
 
     }
 
-    if(userCheck[taxStatus] == 'paid'){
+    if(userCheck.taxStatus == 'paid'){
         return res.send(' tax Already paid by user ')
     }
 
 
     // then simply update it 
+
+    let taxIdCheck = await taxModel.findById(taxId)
+    if(!taxIdCheck){
+        return res.send(' no tax record Found ')
+    }
+
+    let updated = await taxModel.findOneAndUpdate(taxId,{taxDue:taxDueStatus},{new:true})
+
+    return res.send(updated)
+
+
+
+
 
     
 
@@ -274,9 +290,7 @@ const createTaxDue = async function(req,res){
 }
 
 
- const editTaxDue = async function (req,res){
-    
- }
+
 
 
 
@@ -284,6 +298,6 @@ const createTaxDue = async function(req,res){
 
 
 module.exports={
-    userTaxCreation,getTaxDetailsByUserId,getTaxDetailsFiltres, markTaxPaid ,createTaxDue,editTaxDue, editTaxPayer
+    userTaxCreation,getTaxDetailsByUserId,getTaxDetailsFiltres, markTaxPaid ,createAndEditTaxDue, editTaxPayer
   }
 

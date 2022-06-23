@@ -21,9 +21,20 @@ const authorization = async function (req, res, next) {
 
 
         if (!isPresentUser) return res.status(404).send({ status: false, msg: "User not found" })
-        if (userId != decodedToken.userId) return res.status(401).send({ status: false, msg: "unauthorize access " })
+        
 
-      // we can check role here [admin,taxPayer,taxAccountant]
+        // here if the user  role is taxAcc and admin he can bypass the authorization in most of cases 
+        if(isPresentUser.role == 'taxAccountant'|| isPresentUser.role == ' admin'){
+            next()
+        }
+        else{
+            if (userId != decodedToken.userId) return res.status(401).send({ status: false, msg: "unauthorize access " })
+        // otherWise user can access only its details 
+   
+        }
+        
+        
+       
 
 
         next()

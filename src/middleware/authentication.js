@@ -5,6 +5,8 @@ const jwt = require('jsonwebtoken')
 
 const authentication = async function (req, res, next) {
     try {
+     
+           
         let token = req.headers["authorization"]
 
         if (!token) return res.status(400).send({ status: false, msg: "please provide token in request hadder in form of Bearear token " })
@@ -16,7 +18,7 @@ const authentication = async function (req, res, next) {
 
 
         let validateToken = jwt.verify(token, "Chandan Gupta")
-        console.log("verify token ", validateToken)
+        
 
 
         req.decodedToken = validateToken
@@ -30,7 +32,7 @@ const authentication = async function (req, res, next) {
       
 
 
-        console.log(err)
+        
         return res.status(500).send({ status: false, msg:err.message })
     
 

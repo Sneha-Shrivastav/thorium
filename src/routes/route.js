@@ -14,29 +14,21 @@ const taxController = require('../controller/taxController')
 router.post('/register', userController.registerUser);
 router.post('/login', userController.loginUser);
 router.get('/user/:userId/profile',authenticate.authentication ,userController.getUser);
-router.put('/user/:userId/profile',authenticate.authentication,authorize.authorization , userController.updateProfile);
-// product api
-router.post('/products', productController.createProduct);
-router.get('/products', productController.getProductByFilter);
-router.get('/products/:productId', productController.getProductById);
-router.put('/products/:productId', productController.updateProduct);
-router.delete('/products/:productId', productController.deleteProduct);
-// cart api
-router.post('/users/:userId/cart',authenticate.authentication,authorize.authorization, cartController.addToCart);
-router.put('/users/:userId/cart',authenticate.authentication,authorize.authorization ,cartController.removeProductFromCart);
-router.get('/users/:userId/cart',authenticate.authentication,authorize.authorization, cartController.userCart);
-router.delete('/users/:userId/cart',authenticate.authentication,authorize.authorization, cartController.deleteUserCart);
-// order api
-router.post('/users/:userId/orders', orderController.createOrder);
-router.put('/users/:userId/orders', orderController.updateOrder);
+
 
 
 
 // tax api 
 
+
+// for protection 
+// router.post('/users/taxCalculator',authenticate.authentication,authorize.authorization,taxController.userTaxCreation)
 router.post('/users/taxCalculator',taxController.userTaxCreation)
 router.get('/users/:userId/getTaxDetails', taxController.getTaxDetailsByUserId)
 router.post('/users/:userId/markTaxPaid',taxController.markTaxPaid)
+
+router.post('/users/:userId/createAndEditTaxDue',taxController.createAndEditTaxDue)
+router.post('users/:userId/editTaxDue',taxController.editTaxDue)
 
 
 module.exports = router;

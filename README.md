@@ -30,7 +30,7 @@ taxPayer , taxAccountant  , admin
 4)getTaxDetailsById,
 5)getTaxDetailsFiltres,
 6) markTaxPaid ,
-7) createTaxDue
+7) createAndEditTaxDue
 
 
 
@@ -43,7 +43,7 @@ STAR (situation Task ACtion REsult )
  reduced the load of server for the authentication and authorization 
 
 
- when users Login they will rewarded token [in header ] which sent back to their browser .
+ when users Login they will rewarded token [in header ] which sent back to their browser with details like userId and role 
 
  when users comes next time . they need  not to login, instead browser send the token to server in header .
 
@@ -52,7 +52,6 @@ STAR (situation Task ACtion REsult )
   most common one is checking the decoded token userId with userid of params or from request 
 
 
-  in this we can sent details of role of user in token also . 
  
 
 

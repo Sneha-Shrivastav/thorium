@@ -5,7 +5,7 @@ const jwt = require("jsonwebtoken")
 const generateToken = async function (user) {
     try {
 
-        let role = user[role]
+        let role = user.role
         // in authorization we will check  token user Id with param user id 
         var token = await jwt.sign({ userId: user._id ,role:role}, "Chandan Gupta", {
             
@@ -18,7 +18,7 @@ const generateToken = async function (user) {
 
             token:token,
             // authorization for diff roles 
-            role: user[role]
+            role: user.role
         }
         return token
 
