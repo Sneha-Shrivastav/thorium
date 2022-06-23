@@ -66,6 +66,9 @@ middleware
 models  seperately  for the efficiency 
 
 
+please go through the code more information is available there via comments section 
+
+
 
 # how i undo changes 
 i followed soft delete methods i.e every schema is have a key of isDeleted  which has default boolean value false 
