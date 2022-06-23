@@ -1,0 +1,96 @@
+{
+	"info": {
+		"_postman_id": "d51edb37-6ffe-43b9-8919-55446e0c34df",
+		"name": "tax Management",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "19706302"
+	},
+	"item": [
+		{
+			"name": "USER",
+			"item": [
+				{
+					"name": "register User",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/register",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "login",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": ""
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "TAX",
+			"item": [
+				{
+					"name": "tax calculator",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"user\":\"userId\",\r\n        \"totalSales\": \"0\" ,\r\n        \"city\": \"newDelhi \",\r\n        \"date\" : \"09/09/2009\"}\r\n\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8000/users/taxCalculator",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"users",
+								"taxCalculator"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "markTaxPaid",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "get tax details by userId",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
