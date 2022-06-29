@@ -6,7 +6,7 @@ const { findOneAndUpdate } = require('../models/userModel')
 const userModel = require('../models/userModel')
 const validator = require('../validator/validator')
 
-// create 
+
 const userTaxCreation = async function(req,res){
 
     try{
